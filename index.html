@@ -42,16 +42,27 @@
             </div>
             <div class="column-half">
               <label for="title">Title</label>
-              <div><input type="text" id="title" /></div>
+              <div class="inputs">
+                <input type="text" id="title" required />
+              </div>
               <label for="photo-url">Photo URL</label>
-              <div><input type="text" id="photo-url" /></div>
+              <div class="inputs">
+                <input type="text" id="photo-url" required />
+              </div>
             </div>
           </div>
           <div class="row">
             <div class="column-full">
-              <div><label for="notes">Notes</label></div>
-              <textarea name="notes" id="notes" cols="120" rows="10"></textarea>
-              <button type="submit" class="save">save</button>
+              <div class="notes"><label for="notes">Notes</label></div>
+              <textarea
+                name="notes"
+                id="notes"
+                cols="30"
+                rows="10"
+                required></textarea>
+              <div class="save-button">
+                <button type="submit" class="save">save</button>
+              </div>
             </div>
           </div>
         </form>
