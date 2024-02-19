@@ -1,0 +1,18 @@
+.journal {
+  background-color: #4c2474;
+  color: white;
+}
+
+.form {
+  background-color: #eee;
+}
+
+.placeholder {
+  width: 100%;
+}
+
+.save {
+  background-color: #4c2474;
+  color: white;
+  border-radius: 10%;
+}
