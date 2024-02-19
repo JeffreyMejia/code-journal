@@ -13,4 +13,12 @@ const data: Data = {
   nextEntryId: 1,
 };
 
-console.log('data', data);
+window.addEventListener('beforeunload', () => {
+  const dataJSON = JSON.stringify(data);
+  localStorage.setItem('journal-local-storage', dataJSON);
+});
+
+const entries = localStorage.getItem('journal-local-storage');
+if (entries !== null) {
+  data.entries = JSON.parse(entries);
+}
