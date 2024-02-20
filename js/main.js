@@ -20,8 +20,38 @@ $form.addEventListener('submit', (event) => {
   };
   journalEntry.entryID = data.nextEntryId;
   data.nextEntryId++;
-  data.entries.push(journalEntry);
+  data.entries.unshift(journalEntry);
   $image.setAttribute('src', 'images/placeholder-image-square.jpg');
   $form.reset();
-  console.log(journalEntry);
+});
+function renderEntry(entry) {
+  const $listItem = document.createElement('li');
+  const $row = document.createElement('div');
+  $row.setAttribute('class', 'row');
+  const $columnHalf1 = document.createElement('div');
+  $columnHalf1.setAttribute('class', 'column-half');
+  const $image = document.createElement('img');
+  $image.setAttribute('class', 'list-image');
+  $image.setAttribute('src', entry.photoURL);
+  const $columnHalf2 = document.createElement('div');
+  $columnHalf2.setAttribute('class', 'column-half');
+  const $title = document.createElement('h2');
+  $title.textContent = entry.title;
+  const $notes = document.createElement('p');
+  $notes.textContent = entry.notes;
+  $listItem.appendChild($row);
+  $row.appendChild($columnHalf1);
+  $columnHalf1.appendChild($image);
+  $row.appendChild($columnHalf2);
+  $columnHalf2.appendChild($title);
+  $columnHalf2.appendChild($notes);
+  return $listItem;
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const $list = document.querySelector('ul');
+  if (!$list) throw new Error('$list query has failed');
+  for (let i = 0; i < data.entries.length; i++) {
+    const $newEntry = renderEntry(data.entries[i]);
+    $list.appendChild($newEntry);
+  }
 });
