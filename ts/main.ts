@@ -24,8 +24,7 @@ $form.addEventListener('submit', (event: Event) => {
   };
   journalEntry.entryID = data.nextEntryId;
   data.nextEntryId++;
-  data.entries.push(journalEntry);
+  data.entries.unshift(journalEntry);
   $image.setAttribute('src', 'images/placeholder-image-square.jpg');
   $form.reset();
-  console.log(journalEntry);
 });
