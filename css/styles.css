@@ -49,3 +49,14 @@ textarea {
 label {
   font-weight: 600;
 }
+
+/* ^above is home page^
+/below is entries/ */
+
+ul {
+  list-style: none;
+}
+
+.list-image {
+  width: 100%;
+}
