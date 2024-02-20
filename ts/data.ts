@@ -1,12 +1,19 @@
 /* exported data */
+interface Entry {
+  title: string;
+  photoURL: string;
+  notes: string;
+  entryID?: number;
+}
+
 interface Data {
   view: unknown;
-  entries: object[];
+  entries: Entry[];
   editing: unknown;
   nextEntryId: number;
 }
 
-const data: Data = {
+let data: Data = {
   view: 'entry-form',
   entries: [],
   editing: null,
@@ -20,5 +27,5 @@ window.addEventListener('beforeunload', () => {
 
 const entries = localStorage.getItem('journal-local-storage');
 if (entries !== null) {
-  data.entries = JSON.parse(entries);
+  data = JSON.parse(entries);
 }

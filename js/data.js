@@ -1,5 +1,5 @@
 'use strict';
-const data = {
+let data = {
   view: 'entry-form',
   entries: [],
   editing: null,
@@ -11,5 +11,5 @@ window.addEventListener('beforeunload', () => {
 });
 const entries = localStorage.getItem('journal-local-storage');
 if (entries !== null) {
-  data.entries = JSON.parse(entries);
+  data = JSON.parse(entries);
 }
