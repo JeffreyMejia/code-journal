@@ -1,0 +1,51 @@
+.journal {
+  background-color: #4c2474;
+  color: white;
+}
+
+.form {
+  background-color: #eee;
+}
+
+.placeholder {
+  width: 100%;
+  border-radius: 1%;
+}
+
+.notes {
+  margin: 1rem 0;
+}
+
+.save {
+  background-color: #4c2474;
+  color: white;
+  border-radius: 10%;
+  margin-top: 1rem;
+  width: 3rem;
+}
+
+.save-button {
+  display: flex;
+  justify-content: right;
+}
+
+input {
+  width: 80%;
+  border-color: #b9b9ba;
+  border-radius: 3%;
+  border-style: solid;
+}
+
+textarea {
+  width: 100%;
+  border-color: #b9b9ba;
+  border-radius: 1%;
+}
+
+.inputs {
+  margin: 1rem 0;
+}
+
+label {
+  font-weight: 600;
+}
