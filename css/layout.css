@@ -33,13 +33,20 @@
   }
 }
 
-.anchor-column-1 {
+.nav-column {
   display: flex;
-  align-items: center;
-  margin-left: -10rem;
+  flex-basis: calc(100% / 3);
 }
 
-.anchor-column-2 {
-  display: flex;
+.align-center {
   align-items: center;
+}
+
+.no-wrap {
+  flex-wrap: nowrap;
+}
+
+.new-anchor {
+  display: flex;
+  justify-content: flex-end;
 }
