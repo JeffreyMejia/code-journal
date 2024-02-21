@@ -32,3 +32,16 @@
     width: 50%;
   }
 }
+
+.align-center {
+  align-items: center;
+}
+
+.no-wrap {
+  flex-wrap: nowrap;
+}
+
+.new-anchor {
+  display: flex;
+  justify-content: flex-end;
+}

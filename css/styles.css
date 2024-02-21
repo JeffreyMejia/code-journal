@@ -22,6 +22,7 @@
   border-radius: 10%;
   margin-top: 1rem;
   width: 3rem;
+  cursor: pointer;
 }
 
 .save-button {
@@ -48,4 +49,40 @@ textarea {
 
 label {
   font-weight: 600;
+}
+
+.nav-anchor {
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 1rem;
+}
+
+/* ^above is home page^
+/below is entries/ */
+
+.entries-list {
+  list-style: none;
+  margin-left: -2.5rem;
+}
+
+.list-image {
+  width: 100%;
+}
+
+.new {
+  background-color: #4c2474;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 5%;
+  font-size: 15px;
+  padding: 0.8rem;
+}
+
+.no-entries {
+  text-align: center;
+  font-weight: 500;
+  font-size: x-large;
 }
