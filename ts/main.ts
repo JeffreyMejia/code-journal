@@ -67,14 +67,16 @@ document.addEventListener('DOMContentLoaded', () => {
   for (let i = 0; i < data.entries.length; i++) {
     const $newEntry = renderEntry(data.entries[i]);
     $list.appendChild($newEntry);
-    viewSwap(data.view);
-    toggleNoEntries();
   }
+  viewSwap(data.view);
+  toggleNoEntries();
 });
 
 function toggleNoEntries(): void {
   if (data.entries.length > 0) {
     $h3?.setAttribute('class', 'hidden');
+  } else {
+    $h3?.setAttribute('class', 'regular');
   }
 }
 
