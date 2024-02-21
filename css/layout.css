@@ -33,11 +33,6 @@
   }
 }
 
-.nav-column {
-  display: flex;
-  flex-basis: calc(100% / 3);
-}
-
 .align-center {
   align-items: center;
 }
