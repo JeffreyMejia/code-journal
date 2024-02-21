@@ -7,7 +7,7 @@ interface Entry {
 }
 
 interface Data {
-  view: unknown;
+  view: string;
   entries: Entry[];
   editing: unknown;
   nextEntryId: number;

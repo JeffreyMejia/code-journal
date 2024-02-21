@@ -32,3 +32,9 @@
     width: 50%;
   }
 }
+
+.anchor-column {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}

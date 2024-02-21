@@ -1,3 +1,9 @@
+.nav-bar {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
 .journal {
   background-color: #4c2474;
   color: white;
@@ -51,10 +57,18 @@ label {
   font-weight: 600;
 }
 
+.nav-anchor {
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 1.5rem;
+}
+
 /* ^above is home page^
 /below is entries/ */
 
-ul {
+.entries-list {
   list-style: none;
 }
 
@@ -64,7 +78,12 @@ ul {
 
 .new {
   background-color: #4c2474;
-  text-align: right;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 5%;
+  font-size: 20px;
+  padding: 0.8rem;
 }
 
 .no-entries {
