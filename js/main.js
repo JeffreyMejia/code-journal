@@ -30,7 +30,7 @@ $form.addEventListener('submit', (event) => {
   data.entries.unshift(journalEntry);
   $image.setAttribute('src', 'images/placeholder-image-square.jpg');
   $form.reset();
-  let newEntry = renderEntry(journalEntry);
+  const newEntry = renderEntry(journalEntry);
   $list.prepend(newEntry);
   viewSwap('entries');
   toggleNoEntries();
