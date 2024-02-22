@@ -16,11 +16,11 @@ const $dataView = document.querySelectorAll('div[data-view]');
 const $anchor = document.querySelectorAll('a');
 if (!$anchor) throw new Error('$anchor query has failed');
 const $h1 = document.querySelectorAll('.edit');
+const $li = document.querySelectorAll('data-entry-id');
 $photoURL.addEventListener('input', () => {
   $image.setAttribute('src', $photoURL.value);
 });
 $form.addEventListener('submit', (event) => {
-  console.log(event);
   event.preventDefault();
   const journalEntry = {
     title: $title.value,
@@ -36,6 +36,33 @@ $form.addEventListener('submit', (event) => {
   $list.prepend(newEntry);
   viewSwap('entries');
   toggleNoEntries();
+  if (data.editing !== null) {
+    data.editing.entryID = journalEntry.entryID;
+    for (let i = 0; i < data.entries.length; i++) {
+      if (data.entries[i].entryID === journalEntry.entryID) {
+        data.entries[i] = journalEntry;
+      }
+    }
+    const editedEntry = renderEntry(journalEntry);
+    for (let i = 0; i < $li.length; i++) {
+      if ($li[i] === data.editing.entryID) {
+        $li[i] = editedEntry;
+      }
+    }
+    $h1[0].setAttribute('class', 'edit');
+    $h1[1].setAttribute('class', 'edit hidden');
+    data.editing = null;
+    $form.reset();
+  } else {
+    data.nextEntryId++;
+    data.entries.unshift(journalEntry);
+    $image.setAttribute('src', 'images/placeholder-image-square.jpg');
+    $form.reset();
+    const newEntry = renderEntry(journalEntry);
+    $list.prepend(newEntry);
+    viewSwap('entries');
+    toggleNoEntries();
+  }
 });
 function renderEntry(entry) {
   const $listItem = document.createElement('li');
