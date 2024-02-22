@@ -124,7 +124,7 @@ $list.addEventListener('click', (event: Event) => {
       data.editing = data.entries[i];
     }
   }
-  if (data.editing === null) {
+  if (!data.editing) {
     throw new Error('EntryId does not exist in entry list');
   }
   $title.value = data.editing.title;
