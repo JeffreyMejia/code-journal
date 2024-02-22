@@ -3,7 +3,7 @@ const $photoURL = document.querySelector('#photo-url') as HTMLInputElement;
 if (!$photoURL) throw new Error('$photoURL query has failed');
 const $image = document.querySelector('img');
 if (!$image) throw new Error('$image query has failed');
-const $form = document.querySelector('form') as HTMLFormElement;
+const $form = document.querySelector('#form-entry') as HTMLFormElement;
 if (!$form) throw new Error('The $form query has failed');
 const $title = document.querySelector('#title') as HTMLInputElement;
 const $notes = document.querySelector('#notes') as HTMLInputElement;
@@ -14,12 +14,14 @@ if (!$h3) throw new Error('$h3 query has failed');
 const $dataView = document.querySelectorAll('div[data-view]');
 const $anchor = document.querySelectorAll('a');
 if (!$anchor) throw new Error('$anchor query has failed');
+const $h1 = document.querySelectorAll('.edit');
 
 $photoURL.addEventListener('input', () => {
   $image.setAttribute('src', $photoURL.value);
 });
 
 $form.addEventListener('submit', (event: Event) => {
+  console.log(event);
   event.preventDefault();
   const journalEntry: Entry = {
     title: $title.value,
@@ -39,6 +41,7 @@ $form.addEventListener('submit', (event: Event) => {
 
 function renderEntry(entry: Entry): HTMLLIElement {
   const $listItem = document.createElement('li');
+  $listItem.setAttribute('data-entry-id', entry.entryID);
   const $row = document.createElement('div');
   $row.setAttribute('class', 'row');
   const $columnHalf1 = document.createElement('div');
@@ -52,12 +55,18 @@ function renderEntry(entry: Entry): HTMLLIElement {
   $title.textContent = entry.title;
   const $notes = document.createElement('p');
   $notes.textContent = entry.notes;
+  const $row2 = document.createElement('row');
+  $row2.setAttribute('class', 'row title-row');
+  const $pencil = document.createElement('i');
+  $pencil.setAttribute('class', 'fa-solid fa-pencil');
 
   $listItem.appendChild($row);
   $row.appendChild($columnHalf1);
   $columnHalf1.appendChild($image);
   $row.appendChild($columnHalf2);
-  $columnHalf2.appendChild($title);
+  $columnHalf2.appendChild($row2);
+  $row2.appendChild($title);
+  $row2.appendChild($pencil);
   $columnHalf2.appendChild($notes);
 
   return $listItem;
@@ -96,4 +105,30 @@ $anchor[0].addEventListener('click', () => {
 });
 $anchor[1].addEventListener('click', () => {
   viewSwap('entry-form');
+  $h1[1].setAttribute('class', 'edit hidden');
+  $h1[0].setAttribute('class', 'edit');
+});
+
+$list.addEventListener('click', (event: Event) => {
+  const $eventTarget = event.target as HTMLElement;
+  const $closest = $eventTarget.closest('li');
+  const $EntryId = Number($closest?.getAttribute('data-entry-id'));
+  const $pencil = document.querySelector('i');
+  if ($eventTarget === $pencil) {
+    viewSwap('entry-form');
+    $h1[0].setAttribute('class', 'edit hidden');
+    $h1[1].setAttribute('class', 'edit');
+  }
+  for (let i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryID === $EntryId) {
+      data.editing = data.entries[i];
+    }
+  }
+  if (data.editing === null) {
+    throw new Error('EntryId does not exist in entry list');
+  }
+  $title.value = data.editing.title;
+  $notes.value = data.editing.notes;
+  $image.setAttribute('src', data.editing.photoURL);
+  $photoURL.value = data.editing.photoURL;
 });

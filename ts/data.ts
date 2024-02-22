@@ -3,13 +3,13 @@ interface Entry {
   title: string;
   photoURL: string;
   notes: string;
-  entryID?: number;
+  entryID?: number | any;
 }
 
 interface Data {
   view: string;
   entries: Entry[];
-  editing: unknown;
+  editing: Entry | null;
   nextEntryId: number;
 }
 
@@ -21,6 +21,7 @@ let data: Data = {
 };
 
 window.addEventListener('beforeunload', () => {
+  console.log('string');
   const dataJSON = JSON.stringify(data);
   localStorage.setItem('journal-local-storage', dataJSON);
 });
