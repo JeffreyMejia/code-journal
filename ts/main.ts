@@ -14,7 +14,8 @@ if (!$h3) throw new Error('$h3 query has failed');
 const $dataView = document.querySelectorAll('div[data-view]');
 const $anchor = document.querySelectorAll('a');
 if (!$anchor) throw new Error('$anchor query has failed');
-const $h1 = document.querySelectorAll('.edit');
+const $h1 = document.querySelector('.edit');
+if (!$h1) throw new Error('$h1 query has failed');
 
 $photoURL.addEventListener('input', () => {
   $image.setAttribute('src', $photoURL.value);
@@ -45,11 +46,11 @@ $form.addEventListener('submit', (event: Event) => {
         $li[i].replaceWith(editedEntry);
       }
     }
-    $h1[0].setAttribute('class', 'edit');
-    $h1[1].setAttribute('class', 'edit hidden');
+    $h1.innerHTML = 'New Entry';
     data.editing = null;
     $image.setAttribute('src', 'images/placeholder-image-square.jpg');
     $form.reset();
+    viewSwap('entries');
   } else {
     data.nextEntryId++;
     data.entries.unshift(journalEntry);
@@ -64,7 +65,7 @@ $form.addEventListener('submit', (event: Event) => {
 
 function renderEntry(entry: Entry): HTMLLIElement {
   const $listItem = document.createElement('li');
-  $listItem.setAttribute('data-entry-id', entry.entryID);
+  $listItem.setAttribute('data-entry-id', String(entry.entryID));
   const $row = document.createElement('div');
   $row.setAttribute('class', 'row');
   const $columnHalf1 = document.createElement('div');
@@ -128,8 +129,7 @@ $anchor[0].addEventListener('click', () => {
 });
 $anchor[1].addEventListener('click', () => {
   viewSwap('entry-form');
-  $h1[1].setAttribute('class', 'edit hidden');
-  $h1[0].setAttribute('class', 'edit');
+  $h1.innerHTML = 'New Entry';
   $form.reset();
   $image.setAttribute('src', 'images/placeholder-image-square.jpg');
 });
@@ -142,8 +142,7 @@ $list.addEventListener('click', (event: Event) => {
   for (let i = 0; i < $pencil.length; i++) {
     if ($eventTarget === $pencil[i]) {
       viewSwap('entry-form');
-      $h1[0].setAttribute('class', 'edit hidden');
-      $h1[1].setAttribute('class', 'edit');
+      $h1.innerHTML = 'Edit entry';
     }
   }
   for (let i = 0; i < data.entries.length; i++) {

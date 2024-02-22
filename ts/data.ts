@@ -3,7 +3,7 @@ interface Entry {
   title: string;
   photoURL: string;
   notes: string;
-  entryID?: number | any;
+  entryID?: number;
 }
 
 interface Data {
