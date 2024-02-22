@@ -51,3 +51,7 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.buttons-row {
+  align-items: center;
+}

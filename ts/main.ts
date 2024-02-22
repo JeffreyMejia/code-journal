@@ -16,6 +16,7 @@ const $anchor = document.querySelectorAll('a');
 if (!$anchor) throw new Error('$anchor query has failed');
 const $h1 = document.querySelector('.edit');
 if (!$h1) throw new Error('$h1 query has failed');
+const $delete = document.querySelector('.delete');
 
 $photoURL.addEventListener('input', () => {
   $image.setAttribute('src', $photoURL.value);
@@ -132,6 +133,7 @@ $anchor[1].addEventListener('click', () => {
   $h1.innerHTML = 'New Entry';
   $form.reset();
   $image.setAttribute('src', 'images/placeholder-image-square.jpg');
+  $delete?.setAttribute('class', 'delete hidden');
 });
 
 $list.addEventListener('click', (event: Event) => {
@@ -143,6 +145,7 @@ $list.addEventListener('click', (event: Event) => {
     if ($eventTarget === $pencil[i]) {
       viewSwap('entry-form');
       $h1.innerHTML = 'Edit entry';
+      $delete?.setAttribute('class', 'delete');
     }
   }
   for (let i = 0; i < data.entries.length; i++) {

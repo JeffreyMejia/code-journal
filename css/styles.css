@@ -20,7 +20,6 @@
   background-color: #4c2474;
   color: white;
   border-radius: 10%;
-  margin-top: 1rem;
   width: 3rem;
   cursor: pointer;
 }
@@ -28,6 +27,7 @@
 .save-button {
   display: flex;
   justify-content: right;
+  align-items: center;
 }
 
 input {
@@ -61,6 +61,21 @@ label {
 
 .adjust {
   margin-left: 0.3rem;
+}
+
+.delete {
+  color: red;
+  border: none;
+  background-color: #eee;
+  text-decoration: underline;
+  display: flex;
+  justify-content: left;
+}
+
+.delete-button {
+  display: flex;
+  justify-content: left;
+  align-items: center;
 }
 
 /* ^above is home page^
