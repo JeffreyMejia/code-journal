@@ -16,7 +16,6 @@ const $dataView = document.querySelectorAll('div[data-view]');
 const $anchor = document.querySelectorAll('a');
 if (!$anchor) throw new Error('$anchor query has failed');
 const $h1 = document.querySelectorAll('.edit');
-const $li = document.querySelectorAll('data-entry-id');
 $photoURL.addEventListener('input', () => {
   $image.setAttribute('src', $photoURL.value);
 });
@@ -28,30 +27,26 @@ $form.addEventListener('submit', (event) => {
     notes: $notes.value,
   };
   journalEntry.entryID = data.nextEntryId;
-  data.nextEntryId++;
-  data.entries.unshift(journalEntry);
-  $image.setAttribute('src', 'images/placeholder-image-square.jpg');
-  $form.reset();
-  const newEntry = renderEntry(journalEntry);
-  $list.prepend(newEntry);
-  viewSwap('entries');
-  toggleNoEntries();
   if (data.editing !== null) {
-    data.editing.entryID = journalEntry.entryID;
+    journalEntry.entryID = data.editing.entryID;
     for (let i = 0; i < data.entries.length; i++) {
       if (data.entries[i].entryID === journalEntry.entryID) {
         data.entries[i] = journalEntry;
       }
     }
     const editedEntry = renderEntry(journalEntry);
+    const $li = document.querySelectorAll('li');
     for (let i = 0; i < $li.length; i++) {
-      if ($li[i] === data.editing.entryID) {
-        $li[i] = editedEntry;
+      if (
+        $li[i].getAttribute('data-entry-id') === String(data.editing.entryID)
+      ) {
+        $li[i].replaceWith(editedEntry);
       }
     }
     $h1[0].setAttribute('class', 'edit');
     $h1[1].setAttribute('class', 'edit hidden');
     data.editing = null;
+    $image.setAttribute('src', 'images/placeholder-image-square.jpg');
     $form.reset();
   } else {
     data.nextEntryId++;
@@ -126,16 +121,20 @@ $anchor[1].addEventListener('click', () => {
   viewSwap('entry-form');
   $h1[1].setAttribute('class', 'edit hidden');
   $h1[0].setAttribute('class', 'edit');
+  $form.reset();
+  $image.setAttribute('src', 'images/placeholder-image-square.jpg');
 });
 $list.addEventListener('click', (event) => {
   const $eventTarget = event.target;
   const $closest = $eventTarget.closest('li');
   const $EntryId = Number($closest?.getAttribute('data-entry-id'));
-  const $pencil = document.querySelector('i');
-  if ($eventTarget === $pencil) {
-    viewSwap('entry-form');
-    $h1[0].setAttribute('class', 'edit hidden');
-    $h1[1].setAttribute('class', 'edit');
+  const $pencil = document.querySelectorAll('i');
+  for (let i = 0; i < $pencil.length; i++) {
+    if ($eventTarget === $pencil[i]) {
+      viewSwap('entry-form');
+      $h1[0].setAttribute('class', 'edit hidden');
+      $h1[1].setAttribute('class', 'edit');
+    }
   }
   for (let i = 0; i < data.entries.length; i++) {
     if (data.entries[i].entryID === $EntryId) {

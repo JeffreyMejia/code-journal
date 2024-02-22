@@ -6,7 +6,6 @@ let data = {
   nextEntryId: 1,
 };
 window.addEventListener('beforeunload', () => {
-  console.log('string');
   const dataJSON = JSON.stringify(data);
   localStorage.setItem('journal-local-storage', dataJSON);
 });
