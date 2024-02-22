@@ -4,7 +4,7 @@ const $photoURL = document.querySelector('#photo-url');
 if (!$photoURL) throw new Error('$photoURL query has failed');
 const $image = document.querySelector('img');
 if (!$image) throw new Error('$image query has failed');
-const $form = document.querySelector('form');
+const $form = document.querySelector('#form-entry');
 if (!$form) throw new Error('The $form query has failed');
 const $title = document.querySelector('#title');
 const $notes = document.querySelector('#notes');
@@ -15,6 +15,8 @@ if (!$h3) throw new Error('$h3 query has failed');
 const $dataView = document.querySelectorAll('div[data-view]');
 const $anchor = document.querySelectorAll('a');
 if (!$anchor) throw new Error('$anchor query has failed');
+const $h1 = document.querySelector('.edit');
+if (!$h1) throw new Error('$h1 query has failed');
 $photoURL.addEventListener('input', () => {
   $image.setAttribute('src', $photoURL.value);
 });
@@ -26,17 +28,41 @@ $form.addEventListener('submit', (event) => {
     notes: $notes.value,
   };
   journalEntry.entryID = data.nextEntryId;
-  data.nextEntryId++;
-  data.entries.unshift(journalEntry);
-  $image.setAttribute('src', 'images/placeholder-image-square.jpg');
-  $form.reset();
-  const newEntry = renderEntry(journalEntry);
-  $list.prepend(newEntry);
-  viewSwap('entries');
-  toggleNoEntries();
+  if (data.editing !== null) {
+    journalEntry.entryID = data.editing.entryID;
+    for (let i = 0; i < data.entries.length; i++) {
+      if (data.entries[i].entryID === journalEntry.entryID) {
+        data.entries[i] = journalEntry;
+      }
+    }
+    const editedEntry = renderEntry(journalEntry);
+    const $li = document.querySelectorAll('li');
+    for (let i = 0; i < $li.length; i++) {
+      if (
+        $li[i].getAttribute('data-entry-id') === String(data.editing.entryID)
+      ) {
+        $li[i].replaceWith(editedEntry);
+      }
+    }
+    $h1.innerHTML = 'New Entry';
+    data.editing = null;
+    $image.setAttribute('src', 'images/placeholder-image-square.jpg');
+    $form.reset();
+    viewSwap('entries');
+  } else {
+    data.nextEntryId++;
+    data.entries.unshift(journalEntry);
+    $image.setAttribute('src', 'images/placeholder-image-square.jpg');
+    $form.reset();
+    const newEntry = renderEntry(journalEntry);
+    $list.prepend(newEntry);
+    viewSwap('entries');
+    toggleNoEntries();
+  }
 });
 function renderEntry(entry) {
   const $listItem = document.createElement('li');
+  $listItem.setAttribute('data-entry-id', String(entry.entryID));
   const $row = document.createElement('div');
   $row.setAttribute('class', 'row');
   const $columnHalf1 = document.createElement('div');
@@ -50,11 +76,17 @@ function renderEntry(entry) {
   $title.textContent = entry.title;
   const $notes = document.createElement('p');
   $notes.textContent = entry.notes;
+  const $row2 = document.createElement('row');
+  $row2.setAttribute('class', 'row title-row');
+  const $pencil = document.createElement('i');
+  $pencil.setAttribute('class', 'fa-solid fa-pencil');
   $listItem.appendChild($row);
   $row.appendChild($columnHalf1);
   $columnHalf1.appendChild($image);
   $row.appendChild($columnHalf2);
-  $columnHalf2.appendChild($title);
+  $columnHalf2.appendChild($row2);
+  $row2.appendChild($title);
+  $row2.appendChild($pencil);
   $columnHalf2.appendChild($notes);
   return $listItem;
 }
@@ -62,13 +94,15 @@ document.addEventListener('DOMContentLoaded', () => {
   for (let i = 0; i < data.entries.length; i++) {
     const $newEntry = renderEntry(data.entries[i]);
     $list.appendChild($newEntry);
-    viewSwap(data.view);
-    toggleNoEntries();
   }
+  viewSwap(data.view);
+  toggleNoEntries();
 });
 function toggleNoEntries() {
   if (data.entries.length > 0) {
     $h3?.setAttribute('class', 'hidden');
+  } else {
+    $h3?.setAttribute('class', 'regular');
   }
 }
 function viewSwap(view) {
@@ -86,4 +120,31 @@ $anchor[0].addEventListener('click', () => {
 });
 $anchor[1].addEventListener('click', () => {
   viewSwap('entry-form');
+  $h1.innerHTML = 'New Entry';
+  $form.reset();
+  $image.setAttribute('src', 'images/placeholder-image-square.jpg');
+});
+$list.addEventListener('click', (event) => {
+  const $eventTarget = event.target;
+  const $closest = $eventTarget.closest('li');
+  const $EntryId = Number($closest?.getAttribute('data-entry-id'));
+  const $pencil = document.querySelectorAll('i');
+  for (let i = 0; i < $pencil.length; i++) {
+    if ($eventTarget === $pencil[i]) {
+      viewSwap('entry-form');
+      $h1.innerHTML = 'Edit entry';
+    }
+  }
+  for (let i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryID === $EntryId) {
+      data.editing = data.entries[i];
+    }
+  }
+  if (!data.editing) {
+    throw new Error('EntryId does not exist in entry list');
+  }
+  $title.value = data.editing.title;
+  $notes.value = data.editing.notes;
+  $image.setAttribute('src', data.editing.photoURL);
+  $photoURL.value = data.editing.photoURL;
 });
