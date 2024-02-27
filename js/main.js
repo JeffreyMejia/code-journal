@@ -17,6 +17,14 @@ const $anchor = document.querySelectorAll('a');
 if (!$anchor) throw new Error('$anchor query has failed');
 const $h1 = document.querySelector('.edit');
 if (!$h1) throw new Error('$h1 query has failed');
+const $delete = document.querySelector('#delete-button');
+if (!$delete) throw new Error('$delete query failed');
+const $confirm = document.querySelector('.confirm');
+if (!$confirm) throw new Error('$confirm query failed');
+const $cancel = document.querySelector('.cancel');
+if (!$cancel) throw new Error('$cancel query failed');
+const $dialog = document.querySelector('dialog');
+if (!$dialog) throw new Error('$dialog query failed');
 $photoURL.addEventListener('input', () => {
   $image.setAttribute('src', $photoURL.value);
 });
@@ -123,18 +131,12 @@ $anchor[1].addEventListener('click', () => {
   $h1.innerHTML = 'New Entry';
   $form.reset();
   $image.setAttribute('src', 'images/placeholder-image-square.jpg');
+  $delete?.setAttribute('class', 'delete hidden');
 });
 $list.addEventListener('click', (event) => {
   const $eventTarget = event.target;
-  const $closest = $eventTarget.closest('li');
+  const $closest = $eventTarget.closest('[data-entry-id]');
   const $EntryId = Number($closest?.getAttribute('data-entry-id'));
-  const $pencil = document.querySelectorAll('i');
-  for (let i = 0; i < $pencil.length; i++) {
-    if ($eventTarget === $pencil[i]) {
-      viewSwap('entry-form');
-      $h1.innerHTML = 'Edit entry';
-    }
-  }
   for (let i = 0; i < data.entries.length; i++) {
     if (data.entries[i].entryID === $EntryId) {
       data.editing = data.entries[i];
@@ -147,4 +149,30 @@ $list.addEventListener('click', (event) => {
   $notes.value = data.editing.notes;
   $image.setAttribute('src', data.editing.photoURL);
   $photoURL.value = data.editing.photoURL;
+  viewSwap('entry-form');
+  $h1.innerHTML = 'Edit entry';
+  $delete?.setAttribute('class', 'delete');
+});
+$delete.addEventListener('click', () => {
+  $dialog.showModal();
+});
+$cancel.addEventListener('click', () => {
+  $dialog.close();
+});
+$confirm.addEventListener('click', () => {
+  data.entries = data.entries.filter(
+    (entry) => entry.entryID !== data.editing?.entryID
+  );
+  const $li = document.querySelectorAll('li');
+  if (!data.editing) {
+    throw new Error('EntryId does not exist in entry list');
+  }
+  for (let i = 0; i < $li.length; i++) {
+    if ($li[i].getAttribute('data-entry-id') === String(data.editing.entryID)) {
+      $li[i].remove();
+    }
+  }
+  toggleNoEntries();
+  $dialog.close();
+  viewSwap('entries');
 });

@@ -20,14 +20,15 @@
   background-color: #4c2474;
   color: white;
   border-radius: 10%;
-  margin-top: 1rem;
   width: 3rem;
   cursor: pointer;
+  height: 2rem;
 }
 
 .save-button {
   display: flex;
   justify-content: right;
+  align-items: center;
 }
 
 input {
@@ -63,6 +64,22 @@ label {
   margin-left: 0.3rem;
 }
 
+.delete {
+  color: red;
+  border: none;
+  background-color: #eee;
+  text-decoration: underline;
+  display: flex;
+  justify-content: left;
+  cursor: pointer;
+}
+
+.delete-button {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
 /* ^above is home page^
 /below is entries/ */
 
@@ -89,4 +106,33 @@ label {
   text-align: center;
   font-weight: 500;
   font-size: x-large;
+}
+
+.modal-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+dialog {
+  border: none;
+  border-radius: 1%;
+}
+
+.cancel {
+  border-radius: 5%;
+  border: none;
+  background-color: gray;
+  height: 2rem;
+  font-weight: 600;
+  width: 4rem;
+}
+
+.confirm {
+  border-radius: 5%;
+  border: none;
+  background-color: red;
+  height: 2rem;
+  font-weight: 600;
+  width: 4rem;
+  color: white;
 }
