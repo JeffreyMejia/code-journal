@@ -22,6 +22,7 @@
   border-radius: 10%;
   width: 3rem;
   cursor: pointer;
+  height: 2rem;
 }
 
 .save-button {
@@ -70,6 +71,7 @@ label {
   text-decoration: underline;
   display: flex;
   justify-content: left;
+  cursor: pointer;
 }
 
 .delete-button {
@@ -104,4 +106,33 @@ label {
   text-align: center;
   font-weight: 500;
   font-size: x-large;
+}
+
+.modal-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+dialog {
+  border: none;
+  border-radius: 1%;
+}
+
+.cancel {
+  border-radius: 5%;
+  border: none;
+  background-color: gray;
+  height: 2rem;
+  font-weight: 600;
+  width: 4rem;
+}
+
+.confirm {
+  border-radius: 5%;
+  border: none;
+  background-color: red;
+  height: 2rem;
+  font-weight: 600;
+  width: 4rem;
+  color: white;
 }
